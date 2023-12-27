@@ -2,14 +2,14 @@
 {
     public sealed class TimeLimit<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
-        private long? _initialTimestamp;
-        public readonly long TimeLimitInMilliseconds;
+        private ulong? _initialTimestamp;
+        public readonly ulong TimeLimitInMilliseconds;
 
-        public TimeLimit(IBehaviour<TContext> child, int timeLimitInMilliseconds) : this("TimeLimit", child, timeLimitInMilliseconds)
+        public TimeLimit(IBehaviour<TContext> child, uint timeLimitInMilliseconds) : this("TimeLimit", child, timeLimitInMilliseconds)
         {
         }
 
-        public TimeLimit(string name, IBehaviour<TContext> child, int timeLimitInMilliseconds) : base(name, child)
+        public TimeLimit(string name, IBehaviour<TContext> child, uint timeLimitInMilliseconds) : base(name, child)
         {
             TimeLimitInMilliseconds = timeLimitInMilliseconds;
         }

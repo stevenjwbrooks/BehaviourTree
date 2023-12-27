@@ -1,17 +1,19 @@
-﻿namespace BehaviourTree.Decorators
+﻿using System;
+
+namespace BehaviourTree.Decorators
 {
     public sealed class Cooldown<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
-        public readonly long CooldownTimeInMilliseconds;
-        private long _cooldownStartedTimestamp;
+        public readonly ulong CooldownTimeInMilliseconds;
+        private ulong _cooldownStartedTimestamp;
 
         public bool OnCooldown { get; private set; }
 
-        public Cooldown(IBehaviour<TContext> child, int cooldownTimeInMilliseconds) : this("Cooldown", child, cooldownTimeInMilliseconds)
+        public Cooldown(IBehaviour<TContext> child, uint cooldownTimeInMilliseconds) : this("Cooldown", child, cooldownTimeInMilliseconds)
         {
         }
 
-        public Cooldown(string name, IBehaviour<TContext> child, int cooldownTimeInMilliseconds) : base(name, child)
+        public Cooldown(string name, IBehaviour<TContext> child, uint cooldownTimeInMilliseconds) : base(name, child)
         {
             CooldownTimeInMilliseconds = cooldownTimeInMilliseconds;
         }
@@ -23,6 +25,7 @@
 
         private BehaviourStatus RegularBehaviour(TContext context)
         {
+            Console.WriteLine("Cooldown Check");
             var childStatus = Child.Tick(context);
 
             if (childStatus == BehaviourStatus.Succeeded)
@@ -51,12 +54,16 @@
 
         private void ExitCooldown()
         {
+            Console.WriteLine("Exit Cooldown"); 
+            
             OnCooldown = false;
             _cooldownStartedTimestamp = 0;
         }
 
         private void EnterCooldown(TContext context)
         {
+            Console.WriteLine("Enter Cooldown");
+            
             OnCooldown = true;
             _cooldownStartedTimestamp = context.GetTimeStampInMilliseconds();
         }

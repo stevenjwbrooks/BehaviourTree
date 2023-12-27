@@ -2,15 +2,15 @@
 {
     public sealed class RateLimiter<TContext> : DecoratorBehaviour<TContext> where TContext : IClock
     {
-        private long? _previousTimestamp;
+        private ulong? _previousTimestamp;
         private BehaviourStatus _previousChildStatus;
-        public readonly long IntervalInMilliseconds;
+        public readonly ulong IntervalInMilliseconds;
 
-        public RateLimiter(IBehaviour<TContext> child, int intervalInMilliseconds) : this("RateLimiter", child, intervalInMilliseconds)
+        public RateLimiter(IBehaviour<TContext> child, uint intervalInMilliseconds) : this("RateLimiter", child, intervalInMilliseconds)
         {
         }
 
-        public RateLimiter(string name, IBehaviour<TContext> child, int intervalInMilliseconds) : base(name, child)
+        public RateLimiter(string name, IBehaviour<TContext> child, uint intervalInMilliseconds) : base(name, child)
         {
             IntervalInMilliseconds = intervalInMilliseconds;
         }

@@ -1,7 +1,11 @@
-﻿namespace BehaviourTree.Composites
+﻿using System;
+
+namespace BehaviourTree.Composites
 {
     public sealed class PrioritySelector<TContext> : CompositeBehaviour<TContext>
     {
+        private string LastExecuted;
+        
         public PrioritySelector(IBehaviour<TContext>[] children) : this("PrioritySelector", children)
         {
         }
@@ -23,11 +27,17 @@
                         Children[j].Reset();
                     }
 
+                    LastExecuted = Children[i].Name;
                     return childStatus;
                 }
             }
 
             return BehaviourStatus.Failed;
+        }
+
+        public override string ToString()
+        {
+            return LastExecuted;
         }
     }
 }

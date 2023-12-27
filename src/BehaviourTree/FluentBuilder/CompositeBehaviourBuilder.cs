@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BehaviourTree.FluentBuilder
@@ -18,7 +19,7 @@ namespace BehaviourTree.FluentBuilder
             var behaviours = Children
                 .Select(x => x.Build())
                 .ToArray();
-
+            
             return Factory(behaviours);
         }
     }

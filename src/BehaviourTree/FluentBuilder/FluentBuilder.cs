@@ -15,8 +15,7 @@ namespace BehaviourTree.FluentBuilder
     {
         private readonly Stack<CompositeBehaviourBuilder<TContext>> _parentNodeStack = new Stack<CompositeBehaviourBuilder<TContext>>();
         private BehaviourBuilder<TContext> _currentBehaviourBuilder;
-
-
+        
         public FluentBuilder<TContext> End()
         {
             _currentBehaviourBuilder = _parentNodeStack.Pop();
@@ -55,7 +54,7 @@ namespace BehaviourTree.FluentBuilder
             {
                 throw new InvalidOperationException("Tree must contain at least one node");
             }
-
+            
             return _currentBehaviourBuilder.Build();
         }
     }

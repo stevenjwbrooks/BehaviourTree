@@ -2,6 +2,7 @@
 using BehaviourTree.Behaviours;
 using BehaviourTree.Composites;
 using BehaviourTree.Decorators;
+using Com.Enchanters.Warfare.Runtime.Scripts.Abilities;
 
 namespace BehaviourTree.FluentBuilder
 {
@@ -33,7 +34,7 @@ namespace BehaviourTree.FluentBuilder
         public static FluentBuilder<TContext> Wait<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int waitTimeInMilliseconds) where TContext : IClock
+            uint waitTimeInMilliseconds) where TContext : IClock
         {
             return builder.PushLeaf(() => new Wait<TContext>(name, waitTimeInMilliseconds));
         }
@@ -96,11 +97,19 @@ namespace BehaviourTree.FluentBuilder
         {
             return builder.PushComposite(children => new AutoReset<TContext>(name, children[0]));
         }
+        
+        public static FluentBuilder<TContext> AbilityCooldown<TContext>(
+            this FluentBuilder<TContext> builder,
+            string name,
+            Ability ability) where TContext : IClock
+        {
+            return builder.PushComposite(children => new AbilityCooldown<TContext>(name, children[0], ability));
+        }
 
         public static FluentBuilder<TContext> Cooldown<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int cooldownTimeInMilliseconds) where TContext : IClock
+            uint cooldownTimeInMilliseconds) where TContext : IClock
         {
             return builder.PushComposite(children => new Cooldown<TContext>(name, children[0], cooldownTimeInMilliseconds));
         }
@@ -129,7 +138,7 @@ namespace BehaviourTree.FluentBuilder
         public static FluentBuilder<TContext> LimitCallRate<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int intervalInMilliseconds) where TContext : IClock
+            uint intervalInMilliseconds) where TContext : IClock
         {
             return builder.PushComposite(children => new RateLimiter<TContext>(name, children[0], intervalInMilliseconds));
         }
@@ -145,7 +154,7 @@ namespace BehaviourTree.FluentBuilder
         public static FluentBuilder<TContext> TimeLimit<TContext>(
             this FluentBuilder<TContext> builder,
             string name,
-            int timeLimitInMilliseconds) where TContext : IClock
+            uint timeLimitInMilliseconds) where TContext : IClock
         {
             return builder.PushComposite(children => new TimeLimit<TContext>(name, children[0], timeLimitInMilliseconds));
         }

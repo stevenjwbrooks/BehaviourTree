@@ -16,10 +16,7 @@ namespace BehaviourTree
             {
                 n--;
                 var k = randomProvider.NextRandomInteger(n + 1);
-                var value = newArray[k];
-
-                newArray[k] = newArray[n];
-                newArray[n] = value;
+                (newArray[k], newArray[n]) = (newArray[n], newArray[k]);
             }
 
             return newArray;

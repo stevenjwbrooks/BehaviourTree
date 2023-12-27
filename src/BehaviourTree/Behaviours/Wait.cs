@@ -2,15 +2,15 @@
 {
     public sealed class Wait<TContext> : BaseBehaviour<TContext> where TContext : IClock
     {
-        public readonly long WaitTimeInMilliseconds;
-        private long? _initialTimestamp;
+        public readonly ulong WaitTimeInMilliseconds;
+        private ulong? _initialTimestamp;
 
-        public Wait(int waitTimeInMilliseconds) : this("Wait", waitTimeInMilliseconds)
+        public Wait(uint waitTimeInMilliseconds) : this("Wait", waitTimeInMilliseconds)
         {
 
         }
 
-        public Wait(string name, int waitTimeInMilliseconds) : base(name)
+        public Wait(string name, uint waitTimeInMilliseconds) : base(name)
         {
             WaitTimeInMilliseconds = waitTimeInMilliseconds;
         }
